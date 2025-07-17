@@ -1,7 +1,7 @@
 package org.scalasteward.core.forge.github
 
 import org.scalasteward.core.data.Repo
-import org.scalasteward.core.forge.data.PullRequestState
+// import org.scalasteward.core.forge.data.PullRequestState
 
 import cats.syntax.all.*
 import cats.effect.*
