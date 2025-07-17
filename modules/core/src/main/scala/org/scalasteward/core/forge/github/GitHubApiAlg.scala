@@ -133,6 +133,10 @@ final class GitHubApiAlg[F[_]](
         GitHubLabels(labels),
         modify
       )
+      .map { json =>
+        println(s"RETURNED $json")
+        json
+      }
       .adaptErr(SecondaryRateLimitExceeded.fromThrowable)
       .void
 
