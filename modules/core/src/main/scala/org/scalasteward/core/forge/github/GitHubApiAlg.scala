@@ -122,7 +122,7 @@ final class GitHubApiAlg[F[_]](
       .postWithBody(url.comments(repo, number), Comment(comment), modify)
 
   /** https://docs.github.com/en/rest/issues/labels?apiVersion=2022-11-28#add-labels-to-an-issue */
-  private def labelPullRequest(
+  def labelPullRequest(
       repo: Repo,
       number: PullRequestNumber,
       labels: List[String]
