@@ -13,6 +13,7 @@ import org.scalasteward.core.util.HttpJsonClient
 import org.typelevel.log4cats.slf4j.Slf4jLogger
 import org.typelevel.log4cats.Logger
 import org.http4s.*
+import org.scalasteward.core.forge.data.NewPullRequestData
 
 object GithubApiTest extends IOApp {
 
@@ -30,18 +31,29 @@ object GithubApiTest extends IOApp {
     val repo = Repo("coralogix", "eng-svc-dataprime-api")
     (for {
       repoOut <- api.getRepo(repo)
-      prs <- api.listPullRequests(repo, repoOut.default_branch.name, repoOut.default_branch)
-      pr =
-        prs
-          .filter(_.state == PullRequestState.Closed)
-          .filter(_.title.startsWith("Update"))
-          .head
-      _ <- api.labelPullRequest(
+      // prs <- api.listPullRequests(repo, repoOut.default_branch.name, repoOut.default_branch)
+      // pr =
+      //   prs
+      //     .filter(_.state == PullRequestState.Closed)
+      //     .filter(_.title.startsWith("Update"))
+      //     .head
+      // _ <- api.labelPullRequest(
+      //   repo,
+      //   pr.number,
+      //   List("dummy")
+      // )
+      pr <- api.createPullRequest(
         repo,
-        pr.number,
-        List("dummy")
+        NewPullRequestData(
+          "dummy PR",
+          "some body",
+          repoOut.default_branch.name,
+          repoOut.default_branch,
+          labels = List("dummy"),
+          List.empty,
+          List.empty
+        )
       )
-
     } yield println(pr)).as(ExitCode.Success)
   }
 }
