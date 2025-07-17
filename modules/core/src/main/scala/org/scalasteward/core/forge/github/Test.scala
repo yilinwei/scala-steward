@@ -47,7 +47,7 @@ object GithubApiTest extends IOApp {
         NewPullRequestData(
           "dummy PR",
           "some body",
-          repoOut.default_branch.name,
+          "markdown-generator",
           repoOut.default_branch,
           labels = List("dummy"),
           List.empty,
